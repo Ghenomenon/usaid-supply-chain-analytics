@@ -1,0 +1,76 @@
+{
+  "name": "USAID Supply Chain Flat",
+  "dataColors": [
+    "#378ADD",
+    "#eb6834",
+    "#1baf7a",
+    "#eda100",
+    "#e87ba4",
+    "#6250d6",
+    "#e34948",
+    "#888780"
+  ],
+  "background": "#FFFFFF",
+  "foreground": "#2C2C2A",
+  "tableAccent": "#378ADD",
+  "visualStyles": {
+    "*": {
+      "*": {
+        "background": [
+          { "color": { "solid": { "color": "#FFFFFF" } }, "transparency": 0, "show": true }
+        ],
+        "border": [
+          { "show": false }
+        ],
+        "dropShadow": [
+          { "show": false }
+        ],
+        "title": [
+          { "fontSize": 12, "fontColor": { "solid": { "color": "#5F5E5A" } }, "background": { "solid": { "color": "#FFFFFF" } } }
+        ]
+      }
+    },
+    "card": {
+      "*": {
+        "background": [
+          { "color": { "solid": { "color": "#F1EFE8" } }, "transparency": 0, "show": true }
+        ],
+        "border": [
+          { "show": false }
+        ],
+        "categoryLabels": [
+          { "color": { "solid": { "color": "#5F5E5A" } }, "fontSize": 11 }
+        ],
+        "callout": [
+          { "color": { "solid": { "color": "#2C2C2A" } }, "fontSize": 24 }
+        ]
+      }
+    },
+    "barChart": {
+      "*": {
+        "categoryAxis": [
+          { "gridlineShow": false, "fontSize": 10 }
+        ],
+        "valueAxis": [
+          { "gridlineColor": { "solid": { "color": "#E1E0D9" } }, "fontSize": 10 }
+        ],
+        "dataPoint": [
+          { "showAllDataPoints": false }
+        ],
+        "labels": [
+          { "show": true, "fontSize": 10 }
+        ]
+      }
+    },
+    "tableEx": {
+      "*": {
+        "grid": [
+          { "gridVertical": false, "gridHorizontalColor": { "solid": { "color": "#E1E0D9" } } }
+        ],
+        "columnHeaders": [
+          { "fontColor": { "solid": { "color": "#5F5E5A" } }, "backColor": { "solid": { "color": "#FFFFFF" } }, "fontSize": 10 }
+        ]
+      }
+    }
+  }
+}
