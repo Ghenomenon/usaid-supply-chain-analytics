@@ -8,7 +8,7 @@
 
 ## Executive summary
 
-Across 10,324 shipments, **11.5% arrived late**. The strongest, most actionable driver isn't shipment mode or destination country — it's **how the shipment was fulfilled**. Shipments routed through a Regional Distribution Center (RDC) with no clearly defined Incoterm were late **17.2% of the time**, versus **5.3%** for shipments sent Direct Drop from the vendor — a **3.2x difference** on two large, comparably-sized samples (5,404 vs. 4,920 shipments). That single factor outweighs everything else examined in this analysis and should be the first place operational attention goes.
+Across 10,324 shipments, **11.5% arrived late**. The clearest difference isn't between shipment modes or destination countries. It's between **fulfilment routes**. Shipments routed through a Regional Distribution Center (RDC) with no clearly defined Incoterm were late **17.2% of the time**, versus **5.3%** for shipments sent Direct Drop from the vendor — a **3.2x difference** on two large, comparably-sized samples (5,404 vs. 4,920 shipments). This is an observed association, not proof that the route causes delays, since route also varies with order size, product and destination. It is still the largest gap examined here and the first place to investigate.
 
 ## Key findings
 
@@ -44,7 +44,7 @@ Air Charter costs roughly double standard Air ($21,052 vs. $10,459 average freig
 </p>
 
 **4. Large, low-unit-cost bulk orders are more likely to be late.**
-Late shipments have a median quantity 2.5x higher than on-time ones (10,424 vs. 4,122 units) and a lower unit price ($0.14 vs. $0.18) — consistent with large bulk orders facing more logistics/customs friction. A Random Forest model built on this data confirms order size and fulfilment route outrank shipment mode as predictors (ROC-AUC 0.82, catching 89% of shipments that go on to be late).
+Late shipments have a median quantity 2.5x higher than on-time ones (10,424 vs. 4,122 units) and a lower unit price ($0.14 vs. $0.18) — consistent with large bulk orders facing more logistics/customs friction. A Random Forest model built on this data ranks order size and fulfilment route above shipment mode as predictors (ROC-AUC 0.82 on held-out data, catching 90% of shipments that go on to be late). Predictive importance is not evidence of cause.
 
 <p float="left">
   <img src="plots/16_numeric_features_by_late_status.png" width="48%" />
@@ -62,7 +62,7 @@ Late rate was near-zero from 2006–2009 (0–3.6%), then jumped to 15.9% in 201
 2. **For Mozambique, Zambia, and Zimbabwe:** shift a larger share of volume from Truck to Air where budget allows — this is the same lever that already works well everywhere else.
 3. **For Burundi and Congo, DRC:** investigate in-country customs and last-mile handling specifically. Switching shipment mode won't help here, since both countries are already almost entirely Air.
 4. **Investigate the 2010 shift directly** — pull internal records on when RDC-based fulfilment scaled up, and test whether it lines up with the jump in late deliveries.
-5. **Use the predictive model as a triage tool**, not a gatekeeper: flag large-quantity, low-unit-price, RDC-routed shipments for proactive monitoring before they ship, rather than trying to block them outright (the model's precision is intentionally low — 23% — because it was tuned to catch as many true late shipments as possible, at the cost of some false alarms).
+5. **Use the predictive model as a triage tool**, not a gatekeeper: flag large-quantity, low-unit-price, RDC-routed shipments for proactive monitoring before they ship, rather than trying to block them outright (the model's precision is low, 23%, because balanced class weights favour catching late shipments at the cost of false alarms).
 
 ## Caveats and limitations
 

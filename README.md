@@ -2,7 +2,7 @@
 
 End-to-end analysis of 10,324 real health-commodity shipments (HIV test kits, ARVs) to 43 countries, using R, SQL, Power BI, and Python — each tool applied where it's actually the right tool, not as a checklist exercise.
 
-**Headline finding:** shipment fulfilment route is a bigger driver of lateness than shipping mode or destination country. Shipments routed through a Regional Distribution Center with no defined Incoterm were late **17.2%** of the time, vs. **5.3%** for shipments sent directly from the vendor.
+**Headline finding:** the clearest observed difference in late delivery is by fulfilment route. Shipments routed through a Regional Distribution Center with no defined Incoterm were late **17.2%** of the time, vs. **5.3%** for shipments sent directly from the vendor. This is an association: route also varies with order size, product and destination.
 
 📄 **[Read the full recommendation memo](RECOMMENDATIONS_MEMO.md)** — findings, charts, and business recommendations in one document.
 
@@ -24,7 +24,7 @@ End-to-end analysis of 10,324 real health-commodity shipments (HIV test kits, AR
 └── RECOMMENDATIONS_MEMO.md      # Written findings and business recommendations
 ```
 
-**Note:** the actual Power BI `.pbix` file isn't included here (it was built directly in Power BI Desktop) — only the theme it uses. If you want the dashboard itself in the repo, export it as `powerbi/usaid_supply_chain.pbix`.
+**Note:** the Power BI dashboard file is not yet in this repository, only the theme it uses. The [interactive evidence view on my portfolio](https://chigozie-nkwopara.netlify.app/usaid-case-study) reproduces its main comparisons from the same data.
 
 ## What each layer does
 
@@ -34,7 +34,7 @@ End-to-end analysis of 10,324 real health-commodity shipments (HIV test kits, AR
 
 **Power BI** — Two-page dashboard (Overview + Country deep-dive) with DAX measures, a custom flat theme, and a heatmap-style matrix visual. Building it surfaced a second real bug: the CSV export's Windows-style line endings caused Power Query to silently double every row, which inflated `Total Shipments` and diluted `% Late` until traced to the line-ending issue and fixed.
 
-**Python (`predict_late_deliveries.py`)** — A Random Forest classifier predicting whether a shipment will be late (ROC-AUC 0.82, 89% recall on late shipments — tuned deliberately for recall over precision, since missing a genuinely late shipment of HIV/ARV medication costs more than a false alarm). Feature importance revealed that order size (`pack_price`, `line_item_quantity`) and fulfilment route outrank shipment mode as predictors — a finding the R/SQL layers, which only looked at one variable at a time, couldn't have surfaced on their own.
+**Python (`predict_late_deliveries.py`)** — A Random Forest classifier predicting whether a shipment will be late. On the held-out 20% test split it reaches ROC-AUC 0.82 and catches 90% of late shipments, with 23% precision, at the default 0.5 cut-off. No threshold was tuned; balanced class weights are what push the model towards recall. Every step that learns from the data (country grouping, freight-cost imputation, scaling and encoding) is fitted on the training split only, inside the model pipeline. Results are saved to `model_results.csv`. Feature importance shows order size (`pack_price`, `line_item_quantity`) and fulfilment route rank above shipment mode as predictors. Importance describes what the model uses to predict, not what causes a delay.
 
 ## How to reproduce
 
